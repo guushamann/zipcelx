@@ -1,3 +1,3 @@
-import zipcelx from './zipcelx';
+import { zipcelx } from './zipcelx';
 
 global.zipcelx = zipcelx;

@@ -15,7 +15,7 @@ export const generateXMLWorksheet = (rows) => {
   return templateSheet.replace('{placeholder}', XMLRows);
 };
 
-export default (config) => {
+const zipcelxExport = (config) => {
   if (!validator(config)) {
     throw new Error('Validation failed.');
   }
@@ -30,8 +30,11 @@ export default (config) => {
   const worksheet = generateXMLWorksheet(config.sheet.data);
   xl.file('worksheets/sheet1.xml', worksheet);
 
-  return zip.generateAsync({ type: 'blob' })
+  return zip.generateAsync({ type: 'blob', mimeType: 'application/octet-stream' })
     .then((blob) => {
       FileSaver.saveAs(blob, `${config.filename}.xlsx`);
     });
 };
+
+export { zipcelxExport as zipcelx };
+export default zipcelxExport;
